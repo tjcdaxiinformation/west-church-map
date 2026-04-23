@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    body {background-color: #0c0f17}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.AppleSystemUIFontMonospaced'; color: #000000; color: rgba(0, 0, 0, 0.85)}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.AppleSystemUIFontMonospaced'; color: #000000; color: rgba(0, 0, 0, 0.85); min-height: 15.0px}
+  </style>
+</head>
+<body>
+<p class="p1">import React, { useState, useMemo } from 'react';</p>
+<p class="p1">import { MapPin, Navigation, Search, Filter, Globe, ChevronRight, ExternalLink, Info, Map as MapIcon } from 'lucide-react';</p>
+<p class="p2"><br></p>
+<p class="p1">const App = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const churchData = [</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 復興小區</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "前山牧區", name: "八德", address: "33448桃園市八德區瑞發街107巷5弄2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "前山牧區", name: "崎頂", address: "33546桃園市大溪區仁武里8鄰員林路一段142巷82號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "前山牧區", name: "大溪", address: "33542桃園市大溪區一心里民權東路185巷31號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "前山牧區", name: "復興", address: "33641桃園市復興區澤仁里16鄰詩朗7之1號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "前山牧區", name: "(霞雲)", address: "33643桃園市復興區霞雲里3鄰志繼31號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "中山牧區", name: "義盛", address: "33663桃園市復興區義盛里9鄰義興15號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "中山牧區", name: "(卡普)", address: "33643桃園市復興區義盛里4鄰10號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "中山牧區", name: "大灣", address: "33644桃園市復興區羅浮里8鄰高坡62號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "中山牧區", name: "(奎輝)", address: "33643桃園市復興區奎輝里羅馬路三段397号之1" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "中山牧區", name: "雪霧鬧", address: "33644桃園市復興區高義里8鄰雪霧鬧12號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "上巴陵", address: "33644桃園市復興區華陵里9鄰40號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "中巴陵", address: "33644桃園市復興區華陵里8鄰39之3號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "三光", address: "33644桃園市復興區三光里6鄰5之1號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "(高義)", address: "33644桃園市復興區高義里4鄰33之7號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "光華", address: "33644桃園市復興區華陵里6鄰18之3號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "復興小區", note: "後山牧區", name: "(爺亨)", address: "33644桃園市復興區爺亨32號" },</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 竹苗小區</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石後牧區", name: "(養老)", address: "31345新竹縣尖石鄉秀巒村13鄰立園4號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石後牧區", name: "(李埔)", address: "31343新竹縣尖石鄉玉峰村3鄰李埔16號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石後牧區", name: "那羅", address: "31341新竹縣尖石鄉錦屏村10鄰那羅104號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石前牧區", name: "錦屏", address: "31341新竹縣尖石鄉錦屏村2鄰45號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石前牧區", name: "(尖石)", address: "31342新竹縣尖石鄉嘉樂村5鄰麥樹仁272號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "尖石前牧區", name: "義興", address: "31342新竹縣尖石鄉義興村9鄰馬胎68號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "五峰牧區", name: "花園", address: "31141新竹縣五峰鄉花園村6鄰126之1號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "五峰牧區", name: "五峰", address: "31141新竹縣五峰鄉大隘村10鄰五峰191號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "五峰牧區", name: "桃山", address: "31141新竹縣五峰鄉桃山村1鄰6號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "五峰牧區", name: "清泉", address: "31141新竹縣五峰鄉桃山村14鄰清泉228之2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "中港溪牧區", name: "頭份", address: "35142苗栗縣頭份市民權里光華街48號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "中港溪牧區", name: "東江", address: "35343苗栗縣南庄鄉南江村東江新邨25鄰50號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "竹苗小區", note: "中港溪牧區", name: "(東河)", address: "35346苗栗縣南庄鄉東河村東興新邨 129之3號" },</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 中苗小區</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "泰安牧區", name: "永安", address: "36545 苗栗縣泰安鄉象鼻村4鄰永安34號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "泰安牧區", name: "(大安）", address: "36545 苗栗縣泰安鄉象鼻村大安38號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "泰安牧區", name: "士林", address: "36545 苗栗縣泰安鄉士林村4鄰15之2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "泰安牧區", name: "大興", address: "36543苗栗縣泰安鄉大興村6鄰南灣28號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "東達牧區", name: "達觀", address: "42450 台中市和平區達觀里東崎路一段香川巷2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "東達牧區", name: "(竹林)", address: "42450 台中市和平區達觀里東崎路一段竹林巷78號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "東達牧區", name: "雙崎", address: "42450 台中市和平區自由里東崎路二段62之1號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "東達牧區", name: "自由", address: "42450 台中市和平區自由里東崎路二段三叉巷6號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "東達牧區", name: "東勢", address: "42344 台中市東勢區泰昌里泰昌二街91號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "大甲溪牧區", name: "南勢", address: "42441 台中市和平區南勢里東關路三段51之2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "大甲溪牧區", name: "裡冷", address: "42445 台中市和平區博愛里東關路一段裡冷巷15之2號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "大甲溪牧區", name: "博愛", address: "42445 台中市和平區博愛里東關路一段松鶴3巷71號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "大甲溪牧區", name: "環山", address: "42493臺中市和平區平等里中興路三段環山2巷48號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "中苗小區", note: "大甲溪牧區", name: "(佳陽)", address: "42448台中市和平區梨山里和平路二段24號" },</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 南投小區</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "力行線牧區", name: "翠巒", address: "54665南投縣仁愛鄉翠華村翠巒路34號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "力行線牧區", name: "力行", address: "54664南投縣仁愛鄉力行村新望洋130號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "力行線牧區", name: "紅香", address: "54666南投縣仁愛鄉發祥村仁盛路1號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "力行線牧區", name: "慈峰", address: "54666南投縣仁愛鄉發祥村慈峰巷21號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "親春線牧區", name: "親愛", address: "54653南投縣仁愛鄉親愛村親和巷松林17號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "親春線牧區", name: "春陽", address: "54663南投縣仁愛鄉春陽村源泉巷24號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "親春線牧區", name: "廬山", address: "54663南投縣仁愛鄉精英村富貴路53號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "親春線牧區", name: "精英", address: "54663南投縣仁愛鄉都達村平靜法治巷31號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "新望愛牧區", name: "新生", address: "54670南投縣仁愛鄉新生村山林巷眉原182號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "新望愛牧區", name: "仁愛", address: "54549南投縣埔里鎮枇杷里青田街42號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "新望愛牧區", name: "(武界)", address: "54669南投縣仁愛鄉法治村武安路21號" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ zone: "南投小區", note: "新望愛牧區", name: "望美", address: "55651南投縣信義鄉望美村美信巷3之2號" }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [selectedZone, setSelectedZone] = useState('全部');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [searchTerm, setSearchTerm] = useState('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [activeChurch, setActiveChurch] = useState(null);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const zones = ['全部', '復興小區', '竹苗小區', '中苗小區', '南投小區'];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const filteredChurches = useMemo(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return churchData.filter(c =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const matchZone = selectedZone === '全部' || c.zone === selectedZone;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const matchSearch = c.name.includes(searchTerm) || c.address.includes(searchTerm) || c.note.includes(searchTerm);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return matchZone &amp;&amp; matchSearch;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, [selectedZone, searchTerm]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const openInGoogleMaps = (address) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const encodedAddress = encodeURIComponent(address);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.open(`https://www.google.com/maps/search/?api=1&amp;query=${encodedAddress}`, '_blank');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const getZoneColor = (zone) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>switch(zone) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>case '復興小區': return 'bg-amber-500';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>case '竹苗小區': return 'bg-emerald-500';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>case '中苗小區': return 'bg-purple-500';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>case '南投小區': return 'bg-rose-500';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>default: return 'bg-slate-500';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="flex flex-col md:flex-row w-full max-w-6xl h-[750px] bg-slate-50 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 font-sans"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col shrink-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="p-6 bg-slate-900 text-white shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h2 className="text-xl font-black flex items-center tracking-tight"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;MapIcon className="mr-2 text-indigo-400" size={22} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>西區教會地圖導航</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p className="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-bold"&gt;Western District Network&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="p-4 space-y-4 bg-slate-50/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>type="text"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>placeholder="搜尋教會、地址或牧區..."</p>
+<p class="p1"><span class="Apple-converted-space">              </span>className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all shadow-sm"</p>
+<p class="p1"><span class="Apple-converted-space">              </span>value={searchTerm}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>onChange={(e) =&gt; setSearchTerm(e.target.value)}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex flex-wrap gap-1.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{zones.map(zone =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button</p>
+<p class="p1"><span class="Apple-converted-space">                </span>key={zone}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setSelectedZone(zone)}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>className={`px-2.5 py-1.5 rounded-lg text-[11px] font-black transition-all ${</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>selectedZone === zone<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>? 'bg-indigo-600 text-white shadow-md'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>: 'bg-white text-slate-500 hover:bg-slate-100 border border-slate-200'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}`}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{zone}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="flex-grow overflow-y-auto p-3 space-y-2 custom-scrollbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{filteredChurches.map((church, idx) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button</p>
+<p class="p1"><span class="Apple-converted-space">              </span>key={idx}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>onClick={() =&gt; setActiveChurch(church)}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>className={`w-full text-left p-4 rounded-2xl transition-all border ${</p>
+<p class="p1"><span class="Apple-converted-space">                </span>activeChurch?.name === church.name<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>? 'bg-indigo-50 border-indigo-400 shadow-sm'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>: 'bg-white border-slate-100 hover:border-slate-300'</p>
+<p class="p1"><span class="Apple-converted-space">              </span>} flex items-center justify-between group`}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="flex items-start space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${getZoneColor(church.zone)}`} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="text-sm font-black text-slate-800"&gt;{church.name}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="text-[10px] text-slate-500 font-bold"&gt;{church.note}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;ChevronRight size={14} className={`text-slate-300 group-hover:translate-x-1 transition-transform ${activeChurch?.name === church.name ? 'text-indigo-500' : ''}`} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{filteredChurches.length === 0 &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="text-center py-10 text-slate-400 text-xs italic"&gt;無符合結果&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="flex-grow relative bg-[#f1f5f9] overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-50"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="absolute inset-0 flex items-center justify-center p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{activeChurch ? (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="w-full max-w-lg bg-white rounded-[2.5rem] shadow-[0_25px_60px_rgba(0,0,0,0.12)] overflow-hidden border border-white animate-in slide-in-from-bottom-6 duration-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{/* 卡片頂部 */}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className={`h-32 w-full relative ${getZoneColor(activeChurch.zone)}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="absolute -bottom-8 left-10 bg-white p-4 rounded-3xl shadow-xl border border-slate-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;MapPin className="text-indigo-600" size={32} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="absolute top-6 right-8 bg-white/20 backdrop-blur-md px-4 py-1 rounded-full border border-white/30 text-white text-[10px] font-black uppercase tracking-widest"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{activeChurch.zone}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="p-10 pt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;h3 className="text-4xl font-black text-slate-900 tracking-tight leading-none mb-3"&gt;{activeChurch.name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span className="bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase mr-3"&gt;教會標籤&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span className="text-slate-400 text-sm font-bold flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>{activeChurch.note}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{/* 地址資訊 */}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="flex items-start group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mr-5 shrink-0 border border-slate-100 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;Navigation className="text-indigo-600" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="flex-grow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em] mb-1.5"&gt;精確通訊地址&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;p className="text-base text-slate-700 font-bold leading-relaxed"&gt;{activeChurch.address}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{/* 備註資訊 */}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="flex items-start group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mr-5 shrink-0 border border-slate-100 group-hover:bg-indigo-50 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;Info className="text-slate-500" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em] mb-1.5"&gt;所屬牧區單元&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;p className="text-base text-slate-700 font-bold"&gt;{activeChurch.note}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* 行動按鈕 */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>onClick={() =&gt; openInGoogleMaps(activeChurch.address)}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>className="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-sm hover:bg-indigo-600 transition-all flex items-center justify-center shadow-xl hover:shadow-indigo-200/50 active:scale-[0.98]"</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;ExternalLink className="mr-3 text-indigo-300" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Google 地圖實體導航</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;p className="text-center mt-4 text-[10px] text-slate-400 font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>點擊後將自動開啟 Google 地圖並定位至該地址</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="text-center p-16 bg-white/70 backdrop-blur-2xl rounded-[4rem] border border-white shadow-2xl max-w-md animate-pulse"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div className="w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Globe size={48} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;h3 className="text-2xl font-black text-slate-800"&gt;選取教會以查看標籤&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p className="text-sm text-slate-500 mt-4 leading-relaxed font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>系統已成功校對西區共 55 處教會與祈禱所地址。&lt;br/&gt;請從左側清單選擇，以獲取精確導航資訊。</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{/* 狀態列 */}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full border border-white shadow-xl flex items-center space-x-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="w-2.5 h-2.5 bg-green-500 rounded-full mr-2.5 animate-pulse"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span className="text-[11px] font-black text-slate-700 uppercase tracking-tight"&gt;資料已就緒: {churchData.length} 間&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="h-4 w-px bg-slate-300"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="w-3 h-3 rounded-full bg-amber-500" title="復興"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="w-3 h-3 rounded-full bg-emerald-500" title="竹苗"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="w-3 h-3 rounded-full bg-purple-500" title="中苗"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="w-3 h-3 rounded-full bg-rose-500" title="南投"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">export default App;</p>
+</body>
+</html>
